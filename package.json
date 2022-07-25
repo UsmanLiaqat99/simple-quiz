@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
-    "vue": "^3.2.13"
+    "equal-vue": "^0.79.3",
+    "vue": "^3.2.13",
+    "vue-router": "^4.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
