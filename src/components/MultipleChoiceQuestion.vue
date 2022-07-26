@@ -56,6 +56,8 @@ export default {
   },
   methods: {
     selectAnswer() {
+      // this.question.answeredQuestions = this.selectedAnswer
+      console.log(this.question.answeredQuestions)
         const answer = {
             question: this.question.id,
             answer: this.selectedAnswer

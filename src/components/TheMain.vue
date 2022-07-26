@@ -14,13 +14,14 @@
         :question="shownQuestion"
         @selectAnswer="selectAnswer"
       />
+      <TextCode v-else-if="shownQuestion && shownQuestion.type == 5"
+        :question="shownQuestion"
+        @selectAnswer="selectAnswer"/>
       <div class="btn">
-        <it-button type="success" @click="prevQuestion" :disabled="shownQuestionCount < 1" >&lt; Prev</it-button>
-        <it-button type="success" @click="nextQuestion" :disabled="showNextBtn === false">Next &gt;</it-button>
-        <!-- <it-button type="success" @click="nextQuestion" v-if="showNextBtn">Next &gt;</it-button> -->
-        <!-- <it-button type="success" @click="submit">Submit</it-button> -->
+        <base-button :disable="shownQuestionCount < 1" @click="prevQuestion">&lt; Prev</base-button>
+        <base-button :disable="showNextBtn === false" @click="nextQuestion">Next &gt;</base-button>
       </div>
-    </div> 
+    </div>
   </div>
 </template>
 
@@ -28,6 +29,7 @@
 import MultipleChoiceQuestion from "./MultipleChoiceQuestion.vue";
 import TextQuestion from "./TextQuestion.vue";
 import CheckBox from "./CheckBox.vue";
+import TextCode from "./TextCode.vue";
 export default {
   data() {
     return {
@@ -50,6 +52,7 @@ export default {
           },
           answer: "a",
           explanation: "Explanation",
+          answeredQuestions: '',
           type: 0,
         },
         {
@@ -69,10 +72,11 @@ export default {
         },
         {
           id: "3",
-          title: "Rolex is a company that specializes in what type of product?",
+          title: "Boolen Rolex is a company that specializes in what type of product?",
           options: { a: "True", b: "False" },
           answer: "a",
           explanation: "Explanation",
+          answeredQuestions: '',
           type: 2,
         },
         {
@@ -112,7 +116,7 @@ export default {
   methods: {
     selectAnswer(answer) {
       this.showNextBtn = true;
-      console.log(answer, "ok");
+      // console.log(answer, "ok");
       console.log(
         this.answeredQuestions.findIndex((o) => o.question == answer.question)
       );
@@ -120,8 +124,16 @@ export default {
         (o) => o.question == answer.question
       );
       if (index !== -1) {
+        this.questions.selectedAnswer = answer.answer
+          console.log(this.questions.selectedAnswer, 'ok2')
         this.answeredQuestions[index].answer = answer.answer;
-      } else {
+        if (answer.answer.length === 0) {
+          this.showNextBtn = false
+        }
+      }
+      else {
+        this.questions[this.shownQuestionCount].selectedAnswer = answer.answer
+        console.log(this.questions.selectedAnswer, 'ok')
         this.answeredQuestions.push(answer);
         console.log(this.answeredQuestions);
       }
@@ -138,10 +150,12 @@ export default {
       this.shownQuestionCount++;
       this.shownQuestion = this.questions[this.shownQuestionCount];
       this.showNextBtn = false
+      console.log(this.questions[this.shownQuestionCount].selectedAnswer, 'ok')
     },
     prevQuestion() {
       this.shownQuestionCount--;
       this.shownQuestion = this.questions[this.shownQuestionCount];
+      this.showNextBtn = true
     },
     showResults() {
       this.finalAnswered();
@@ -154,7 +168,7 @@ export default {
       this.wrongAnswer = 0;
     },
   },
-  components: { MultipleChoiceQuestion, TextQuestion, CheckBox },
+  components: { MultipleChoiceQuestion, TextQuestion, CheckBox, TextCode },
 };
 </script>
 

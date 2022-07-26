@@ -51,35 +51,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-
-.mainQuestion {
-  max-width: 600px;
-  min-width: 600px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  padding: 10px 50px 80px 50px;
-  background-color: white;
-  border-radius: 5px;
-}
-
-.mainQuestion label {
-  padding: 15px;
-  border: 1px solid grey;
-  margin: 10px 0px;
-  border-radius: 5px;
-  font-size: 18px;
-}
-
-.input_label:hover {
-  background-color: #f1f3f4;
-}
-.input_label_selected {
-  background-color: rgba(128, 128, 128, 0.808);
-}
-.input_label_green {
-  background-color: #83f4c5;
-}
-</style>

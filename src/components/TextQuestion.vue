@@ -37,26 +37,30 @@ export default {
   data() {
     return {
       selectedAnswerShort: "",
-      selectedAnswerLong: "",
+      selectedAnswerLong: ""
     };
   },
   methods: {
     selectAnswer() {
-      if (this.question.type === 3) {
-        const answer = {
-          question: this.question.id,
-          answer: this.selectedAnswerShort
+      if (this.selectedAnswerShort === '' ) {
+        console.log('null')
+      } else {
+        if (this.question.type === 3) {
+          const answer = {
+            question: this.question.id,
+            answer: this.selectedAnswerShort
+          }
+          console.log(answer)
+          this.$emit('selectAnswer', answer)
+        } 
+        else {
+          const answer = {
+            question: this.question.id,
+            answer: this.selectedAnswerShort
+          }
+          console.log(answer)
+          this.$emit('selectAnswer', answer)
         }
-        console.log(answer)
-        this.$emit('selectAnswer', answer)
-      } 
-      else {
-        const answer = {
-          question: this.question.id,
-          answer: this.selectedAnswerShort
-        }
-        console.log(answer)
-        this.$emit('selectAnswer', answer)
       }
     },
   },
@@ -64,6 +68,18 @@ export default {
 </script>
 
 <style scoped>
+.mainQuestion input, .mainQuestion textarea {
+  padding: 8px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid grey;
+  font-size: 18px;
+}
+
+.mainQuestion textarea {
+  height: 120px;
+}
+
 @media only screen and (max-width: 750px) {
   .questionTitle {
     font-size: 18px;
