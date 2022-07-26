@@ -19,11 +19,6 @@
           @change="selectAnswer"
           v-model="selectedAnswer"
         />
-      <label :for="key" v-for="(option, i) in Object.keys(question.options)" :key="i" :class="[
-        { input_label: selectedAnswer !== option },
-        { input_label_selected: selectedAnswer == option },
-      ]">
-        <input class="hidden" type="radio" :id="i" :value="option" @change="selectAnswer" v-model="selectedAnswer" />
         {{ question.options[option] }}
       </label>
     </div>
@@ -61,17 +56,13 @@ export default {
   },
   methods: {
     selectAnswer() {
+      // this.question.answeredQuestions = this.selectedAnswer
+      console.log(this.question.answeredQuestions)
         const answer = {
             question: this.question.id,
             answer: this.selectedAnswer
         }
         this.$emit('selectAnswer', answer)
-      const answer = {
-        question: this.question.id,
-        answer: this.selectedAnswer
-      }
-      console.log(answer)
-      this.$emit('selectAnswer', answer)
     },
   },
 };
@@ -104,6 +95,7 @@ export default {
 .input_label_selected {
   background-color: rgba(128, 128, 128, 0.808);
 }
+
 .input_label_red {
   background-color: rgba(128, 128, 128, 0.808);
 }
