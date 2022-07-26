@@ -66,8 +66,7 @@ export default {
 };
 </script>
 
-<style scoped>
-
+<style >
 .mainQuestion {
   max-width: 600px;
   min-width: 600px;
@@ -90,10 +89,34 @@ export default {
 .input_label:hover {
   background-color: #f1f3f4;
 }
+
 .input_label_selected {
   background-color: rgba(128, 128, 128, 0.808);
 }
+
+.input_label_red {
+  background-color: rgba(128, 128, 128, 0.808);
+}
+
 .input_label_green {
   background-color: #83f4c5;
+}
+
+/* RESPONSIVE */
+@media only screen and (max-width: 750px) {
+  .mainQuestion {
+    max-width: 250px;
+    min-width: 250px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .mainQuestion label {
+    padding: 10px;
+  }
+
+  .mainQuestion {
+    padding: 20px 20px 80px 20px;
+  }
 }
 </style>
