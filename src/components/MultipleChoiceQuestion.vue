@@ -4,7 +4,6 @@
       <h2 class="questionTitle">
         {{ question.title }}
       </h2>
-<<<<<<< HEAD
       <label
         v-for="(option, i) in Object.keys(question.options)"
         :key="i"
@@ -20,13 +19,11 @@
           @change="selectAnswer"
           v-model="selectedAnswer"
         />
-=======
       <label :for="key" v-for="(option, i) in Object.keys(question.options)" :key="i" :class="[
         { input_label: selectedAnswer !== option },
         { input_label_selected: selectedAnswer == option },
       ]">
         <input class="hidden" type="radio" :id="i" :value="option" @change="selectAnswer" v-model="selectedAnswer" />
->>>>>>> origin/usman
         {{ question.options[option] }}
       </label>
     </div>
@@ -64,20 +61,17 @@ export default {
   },
   methods: {
     selectAnswer() {
-<<<<<<< HEAD
         const answer = {
             question: this.question.id,
             answer: this.selectedAnswer
         }
         this.$emit('selectAnswer', answer)
-=======
       const answer = {
         question: this.question.id,
         answer: this.selectedAnswer
       }
       console.log(answer)
       this.$emit('selectAnswer', answer)
->>>>>>> origin/usman
     },
   },
 };
@@ -110,14 +104,10 @@ export default {
 .input_label_selected {
   background-color: rgba(128, 128, 128, 0.808);
 }
-<<<<<<< HEAD
-=======
-
 .input_label_red {
   background-color: rgba(128, 128, 128, 0.808);
 }
 
->>>>>>> origin/usman
 .input_label_green {
   background-color: #83f4c5;
 }

@@ -1,7 +1,6 @@
 <template>
   <div id="main">
     <div>
-<<<<<<< HEAD
       <MultipleChoiceQuestion
         v-if="shownQuestion && (shownQuestion.type == 0 || shownQuestion.type == 2)"
         :question="shownQuestion"
@@ -15,6 +14,13 @@
         :question="shownQuestion"
         @selectAnswer="selectAnswer"
       />
+      <div class="btn">
+        <it-button type="success" @click="prevQuestion" :disabled="shownQuestionCount < 1" >&lt; Prev</it-button>
+        <it-button type="success" @click="nextQuestion" :disabled="showNextBtn === false">Next &gt;</it-button>
+        <!-- <it-button type="success" @click="nextQuestion" v-if="showNextBtn">Next &gt;</it-button> -->
+        <!-- <it-button type="success" @click="submit">Submit</it-button> -->
+      </div>
+    </div> 
     </div>
     <!-- <div class="btn" style="display: flex">
       <it-button style="margin-left: 350px" type="success" @click="nextQuestion"
@@ -22,7 +28,6 @@
       >
     </div> -->
     <it-button type="success" @click="nextQuestion" v-if="showNextBtn">Next &gt;</it-button>
-=======
       <MultipleChoiceQuestion v-if="shownQuestion && (shownQuestion.type == 0 || shownQuestion.type == 2)"
         :question="shownQuestion" @selectAnswer="selectAnswer" />
       <TextQuestion v-else-if="shownQuestion && (shownQuestion.type == 3 || shownQuestion.type == 4)"
@@ -33,7 +38,6 @@
         <!-- <it-button type="success" @click="submit">Submit</it-button> -->
       </div>
     </div>
->>>>>>> origin/usman
   </div>
 </template>
 
@@ -67,7 +71,8 @@ export default {
         },
         {
           id: "2",
-          title: "Check Box is a company that specializes in what type of product?",
+          title:
+            "Check Box is a company that specializes in what type of product?",
           options: {
             a: "BagTrue",
             b: "Watches",
@@ -113,7 +118,7 @@ export default {
         },
       ],
       shownQuestion: null,
-      showNextBtn: false
+      showNextBtn: false,
     };
   },
   mounted() {
@@ -123,7 +128,7 @@ export default {
   },
   methods: {
     selectAnswer(answer) {
-      this.showNextBtn = true
+      this.showNextBtn = true;
       console.log(answer, "ok");
       console.log(
         this.answeredQuestions.findIndex((o) => o.question == answer.question)
@@ -135,7 +140,7 @@ export default {
         this.answeredQuestions[index].answer = answer.answer;
       } else {
         this.answeredQuestions.push(answer);
-        console.log(this.answeredQuestions)
+        console.log(this.answeredQuestions);
       }
     },
     answered(e) {
@@ -149,7 +154,11 @@ export default {
     nextQuestion() {
       this.shownQuestionCount++;
       this.shownQuestion = this.questions[this.shownQuestionCount];
-      // this.showNextBtn = false
+      this.showNextBtn = false
+    },
+    prevQuestion() {
+      this.shownQuestionCount--;
+      this.shownQuestion = this.questions[this.shownQuestionCount];
     },
     prevQuestion() {
       this.shownQuestionCount--;
