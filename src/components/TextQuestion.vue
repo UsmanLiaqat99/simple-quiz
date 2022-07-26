@@ -4,8 +4,10 @@
       <h2 class="questionTitle">
         {{ question.title }}
       </h2>
-      <input class="input_label" v-if="question.type == 3" v-model="selectedAnswer" type="text" @change="selectAnswer" />
-      <textarea class="input_label" v-if="question.type == 4" v-model="selectedAnswer" type="text" @change="selectAnswer" />
+      <input class="input_label" v-if="question.type == 3" v-model="selectedAnswer" type="text"
+        @change="selectAnswer" />
+      <textarea class="input_label" v-if="question.type == 4" v-model="selectedAnswer" type="text"
+        @change="selectAnswer" />
     </div>
   </div>
 </template>
@@ -41,12 +43,12 @@ export default {
   },
   methods: {
     selectAnswer() {
-        const answer = {
-            question: this.question.id,
-            answer: this.selectedAnswer
-        }
-        console.log(answer)
-        this.$emit('selectAnswer', answer)
+      const answer = {
+        question: this.question.id,
+        answer: this.selectedAnswer
+      }
+      console.log(answer)
+      this.$emit('selectAnswer', answer)
     },
   },
 };
