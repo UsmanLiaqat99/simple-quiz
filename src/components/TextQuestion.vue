@@ -55,6 +55,18 @@ export default {
 </script>
 
 <style scoped>
+.mainQuestion input, .mainQuestion textarea {
+  padding: 8px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid grey;
+  font-size: 18px;
+}
+
+.mainQuestion textarea {
+  height: 120px;
+}
+
 @media only screen and (max-width: 750px) {
   .questionTitle {
     font-size: 18px;

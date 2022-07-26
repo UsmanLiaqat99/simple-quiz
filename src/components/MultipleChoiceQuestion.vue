@@ -4,11 +4,21 @@
       <h2 class="questionTitle">
         {{ question.title }}
       </h2>
-      <label :for="key" v-for="(option, i) in Object.keys(question.options)" :key="i" :class="[
-        { input_label: selectedAnswer !== option },
-        { input_label_selected: selectedAnswer == option },
-      ]">
-        <input class="hidden" type="radio" :id="i" :value="option" @change="selectAnswer" v-model="selectedAnswer" />
+      <label
+        v-for="(option, i) in Object.keys(question.options)"
+        :key="i"
+        :class="[
+          { input_label: selectedAnswer !== option },
+          { input_label_selected: selectedAnswer == option },
+        ]"
+      >
+        <input
+          type="radio"
+          :id="i"
+          :value="option"
+          @change="selectAnswer"
+          v-model="selectedAnswer"
+        />
         {{ question.options[option] }}
       </label>
     </div>
@@ -21,22 +31,22 @@ export default {
   props: {
     question: {
       type: Object,
-      default: () => {
-        return {
-          id: "1",
-          title: "Rolex is a company that specializes in what type of product?",
-          options: {
-            a: "Bags",
-            b: "Watches",
-            c: "Shoes",
-            d: "Laptops",
-            e: "Laptops 123",
-          },
-          answer: "a",
-          explanation: "Explanation",
-          type: 0,
-        };
-      },
+      // default: () => {
+      //   return {
+      //     id: "1",
+      //     title: "Rolex is a company that specializes in what type of product?",
+      //     options: {
+      //       a: "Bags",
+      //       b: "Watches",
+      //       c: "Shoes",
+      //       d: "Laptops",
+      //       e: "Laptops 123",
+      //     },
+      //     answer: "a",
+      //     explanation: "Explanation",
+      //     type: 0,
+      //   };
+      // },
     },
   },
   data() {
@@ -46,12 +56,11 @@ export default {
   },
   methods: {
     selectAnswer() {
-      const answer = {
-        question: this.question.id,
-        answer: this.selectedAnswer
-      }
-      console.log(answer)
-      this.$emit('selectAnswer', answer)
+        const answer = {
+            question: this.question.id,
+            answer: this.selectedAnswer
+        }
+        this.$emit('selectAnswer', answer)
     },
   },
 };
