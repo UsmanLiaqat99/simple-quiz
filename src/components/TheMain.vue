@@ -65,7 +65,7 @@ export default {
         {
           id: "3",
           title: "Rolex is a company that specializes in what type of product?",
-          options: { a: "True", b: "Fakse" },
+          options: { a: "True", b: "False" },
           answer: "a",
           explanation: "Explanation",
           type: 2,
