@@ -21,6 +21,24 @@
         <!-- <it-button type="success" @click="submit">Submit</it-button> -->
       </div>
     </div> 
+    </div>
+    <!-- <div class="btn" style="display: flex">
+      <it-button style="margin-left: 350px" type="success" @click="nextQuestion"
+        >Next &gt;</it-button
+      >
+    </div> -->
+    <it-button type="success" @click="nextQuestion" v-if="showNextBtn">Next &gt;</it-button>
+      <MultipleChoiceQuestion v-if="shownQuestion && (shownQuestion.type == 0 || shownQuestion.type == 2)"
+        :question="shownQuestion" @selectAnswer="selectAnswer" />
+      <TextQuestion v-else-if="shownQuestion && (shownQuestion.type == 3 || shownQuestion.type == 4)"
+        :question="shownQuestion" @selectAnswer="selectAnswer" />
+      <div class="btn">
+        <it-button type="success" @click="prevQuestion" :disabled="shownQuestionCount < 1" >&lt; Prev</it-button>
+        <it-button type="success" @click="nextQuestion" :disabled="showNextBtn === false">Next &gt;</it-button>
+        <!-- <it-button type="success" @click="nextQuestion" v-if="showNextBtn">Next &gt;</it-button> -->
+        <!-- <it-button type="success" @click="submit">Submit</it-button> -->
+      </div>
+    </div> 
   </div>
 </template>
 
@@ -138,6 +156,10 @@ export default {
       this.shownQuestionCount++;
       this.shownQuestion = this.questions[this.shownQuestionCount];
       this.showNextBtn = false
+    },
+    prevQuestion() {
+      this.shownQuestionCount--;
+      this.shownQuestion = this.questions[this.shownQuestionCount];
     },
     prevQuestion() {
       this.shownQuestionCount--;
