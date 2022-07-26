@@ -19,6 +19,12 @@
           />
           {{ answer }}
         </label>
+
+        <div class="btn">
+        <it-button type="success" @click="prevQuestion">&lt; Prev</it-button>
+        <it-button type="success" @click="nextQuestion">Next &gt;</it-button>
+        <it-button type="success" @click="submit">Submit</it-button>
+      </div>
       </div>
       <div class="btn" style="display: flex">
         <it-button

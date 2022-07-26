@@ -4,23 +4,11 @@
       <h2 class="questionTitle">
         {{ question.title }}
       </h2>
-      <label
-        :for="key"
-        v-for="(option, i) in Object.keys(question.options)"
-        :key="i"
-        :class="[
-          { input_label: selectedAnswer !== option },
-          { input_label_selected: selectedAnswer == option },
-        ]"
-      >
-        <input
-          class="hidden"
-          type="radio"
-          :id="i"
-          :value="option"
-          @change="selectAnswer"
-          v-model="selectedAnswer"
-        />
+      <label :for="key" v-for="(option, i) in Object.keys(question.options)" :key="i" :class="[
+        { input_label: selectedAnswer !== option },
+        { input_label_selected: selectedAnswer == option },
+      ]">
+        <input class="hidden" type="radio" :id="i" :value="option" @change="selectAnswer" v-model="selectedAnswer" />
         {{ question.options[option] }}
       </label>
     </div>
@@ -58,19 +46,18 @@ export default {
   },
   methods: {
     selectAnswer() {
-        const answer = {
-            question: this.question.id,
-            answer: this.selectedAnswer
-        }
-        console.log(answer)
-        this.$emit('selectAnswer', answer)
+      const answer = {
+        question: this.question.id,
+        answer: this.selectedAnswer
+      }
+      console.log(answer)
+      this.$emit('selectAnswer', answer)
     },
   },
 };
 </script>
 
-<style scoped>
-
+<style >
 .mainQuestion {
   max-width: 600px;
   min-width: 600px;
@@ -93,13 +80,34 @@ export default {
 .input_label:hover {
   background-color: #f1f3f4;
 }
+
 .input_label_selected {
   background-color: rgba(128, 128, 128, 0.808);
 }
+
 .input_label_red {
   background-color: rgba(128, 128, 128, 0.808);
 }
+
 .input_label_green {
   background-color: #83f4c5;
+}
+
+/* RESPONSIVE */
+@media only screen and (max-width: 750px) {
+  .mainQuestion {
+    max-width: 250px;
+    min-width: 250px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .mainQuestion label {
+    padding: 10px;
+  }
+
+  .mainQuestion {
+    padding: 20px 20px 80px 20px;
+  }
 }
 </style>

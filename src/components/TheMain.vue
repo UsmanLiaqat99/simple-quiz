@@ -1,23 +1,16 @@
 <template>
   <div id="main">
     <div>
-      <MultipleChoiceQuestion
-        v-if="shownQuestion && (shownQuestion.type == 0 || shownQuestion.type == 2)"
-        :question="shownQuestion"
-        @selectAnswer="selectAnswer"
-      />
-      <TextQuestion
-        v-else-if="shownQuestion && (shownQuestion.type == 3 || shownQuestion.type == 4)"
-        :question="shownQuestion"
-        @selectAnswer="selectAnswer"
-      />
+      <MultipleChoiceQuestion v-if="shownQuestion && (shownQuestion.type == 0 || shownQuestion.type == 2)"
+        :question="shownQuestion" @selectAnswer="selectAnswer" />
+      <TextQuestion v-else-if="shownQuestion && (shownQuestion.type == 3 || shownQuestion.type == 4)"
+        :question="shownQuestion" @selectAnswer="selectAnswer" />
+      <div class="btn">
+        <it-button type="success" @click="prevQuestion">&lt; Prev</it-button>
+        <it-button type="success" @click="nextQuestion">Next &gt;</it-button>
+        <!-- <it-button type="success" @click="submit">Submit</it-button> -->
+      </div>
     </div>
-    <!-- <div class="btn" style="display: flex">
-      <it-button style="margin-left: 350px" type="success" @click="nextQuestion"
-        >Next &gt;</it-button
-      >
-    </div> -->
-    <it-button type="success" @click="nextQuestion">Next &gt;</it-button>
   </div>
 </template>
 
@@ -130,6 +123,10 @@ export default {
       this.shownQuestionCount++;
       this.shownQuestion = this.questions[this.shownQuestionCount];
     },
+    prevQuestion() {
+      this.shownQuestionCount--;
+      this.shownQuestion = this.questions[this.shownQuestionCount];
+    },
     showResults() {
       this.finalAnswered();
       this.index++;
@@ -152,66 +149,23 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background-color: #e5e7eb;
-  height: 37rem;
-}
-
-.main_title {
-  color: blue;
-  font-size: 32px;
-  text-align: center;
-}
-
-.mainQuiz {
-  max-width: 600px;
-  min-width: 600px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  padding: 10px 50px 80px 50px;
-  background-color: white;
-  border-radius: 5px;
-}
-
-.mainQuiz label {
-  padding: 15px;
-  border: 1px solid grey;
-  margin: 10px 0px;
-  border-radius: 5px;
-  font-size: 18px;
-}
-
-.input_label:hover {
-  background-color: #f1f3f4;
-}
-
-.input_label_red {
-  background-color: rgba(128, 128, 128, 0.808);
-}
-
-.input_label_green {
-  background-color: #83f4c5;
+  height: 38rem;
 }
 
 .btn {
+  margin: 0px 50px;
+  display: flex;
+  justify-content: space-between;
   margin-top: -60px;
-  margin-left: 210px;
 }
 
-.mainQuiz2 {
-  margin-top: 100px;
-}
-
-.mainQuiz2 h2 {
-  font-size: 30px;
-}
-
-.result p {
-  font-size: 20px;
-  margin: 10px 0px;
-}
-
-.playAgain {
-  margin-top: 20px;
+/* RESPONSIVE */
+@media only screen and (max-width: 450px) {
+  .btn {
+    margin: 0px 30px;
+    margin-top: -52px;
+  }
 }
 </style>
