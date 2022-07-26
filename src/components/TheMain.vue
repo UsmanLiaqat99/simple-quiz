@@ -77,7 +77,7 @@ export default {
         },
         {
           id: "4",
-          title: "Rolex is a company that specializes in what type of product?",
+          title: "Short Question is a company that specializes in what type of product?",
           options: null,
           answer: null,
           explanation: "Explanation",
@@ -85,7 +85,7 @@ export default {
         },
         {
           id: "5",
-          title: "Rolex is a company that specializes in what type of product?",
+          title: "Long Question is a company that specializes in what type of product?",
           options: null,
           answer: null,
           explanation: "Explanation",
@@ -93,7 +93,7 @@ export default {
         },
         {
           id: "6",
-          title: "Rolex is a company that specializes in what type of product?",
+          title: "Code of block is a company that specializes in what type of product?",
           options: null,
           answer: null,
           explanation: "Explanation",
