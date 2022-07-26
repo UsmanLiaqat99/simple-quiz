@@ -6,6 +6,9 @@
         :question="shownQuestion"
         @selectAnswer="selectAnswer"
       />
+      <CheckBox v-else-if="shownQuestion && shownQuestion.type == 1"
+        :question="shownQuestion"
+        @selectAnswer="selectAnswer"/>
       <TextQuestion
         v-else-if="shownQuestion && (shownQuestion.type == 3 || shownQuestion.type == 4)"
         :question="shownQuestion"
@@ -17,13 +20,14 @@
         >Next &gt;</it-button
       >
     </div> -->
-    <it-button type="success" @click="nextQuestion">Next &gt;</it-button>
+    <it-button type="success" @click="nextQuestion" v-if="showNextBtn">Next &gt;</it-button>
   </div>
 </template>
 
 <script>
 import MultipleChoiceQuestion from "./MultipleChoiceQuestion.vue";
 import TextQuestion from "./TextQuestion.vue";
+import CheckBox from "./CheckBox.vue";
 export default {
   data() {
     return {
@@ -50,7 +54,7 @@ export default {
         },
         {
           id: "2",
-          title: "Rolex is a company that specializes in what type of product?",
+          title: "Check Box is a company that specializes in what type of product?",
           options: {
             a: "BagTrue",
             b: "Watches",
@@ -96,6 +100,7 @@ export default {
         },
       ],
       shownQuestion: null,
+      showNextBtn: false
     };
   },
   mounted() {
@@ -105,6 +110,7 @@ export default {
   },
   methods: {
     selectAnswer(answer) {
+      this.showNextBtn = true
       console.log(answer, "ok");
       console.log(
         this.answeredQuestions.findIndex((o) => o.question == answer.question)
@@ -116,6 +122,7 @@ export default {
         this.answeredQuestions[index].answer = answer.answer;
       } else {
         this.answeredQuestions.push(answer);
+        console.log(this.answeredQuestions)
       }
     },
     answered(e) {
@@ -129,6 +136,7 @@ export default {
     nextQuestion() {
       this.shownQuestionCount++;
       this.shownQuestion = this.questions[this.shownQuestionCount];
+      // this.showNextBtn = false
     },
     showResults() {
       this.finalAnswered();
@@ -141,7 +149,7 @@ export default {
       this.wrongAnswer = 0;
     },
   },
-  components: { MultipleChoiceQuestion, TextQuestion },
+  components: { MultipleChoiceQuestion, TextQuestion, CheckBox },
 };
 </script>
 

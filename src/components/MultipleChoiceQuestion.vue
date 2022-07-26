@@ -5,7 +5,6 @@
         {{ question.title }}
       </h2>
       <label
-        :for="key"
         v-for="(option, i) in Object.keys(question.options)"
         :key="i"
         :class="[
@@ -14,7 +13,6 @@
         ]"
       >
         <input
-          class="hidden"
           type="radio"
           :id="i"
           :value="option"
@@ -33,22 +31,22 @@ export default {
   props: {
     question: {
       type: Object,
-      default: () => {
-        return {
-          id: "1",
-          title: "Rolex is a company that specializes in what type of product?",
-          options: {
-            a: "Bags",
-            b: "Watches",
-            c: "Shoes",
-            d: "Laptops",
-            e: "Laptops 123",
-          },
-          answer: "a",
-          explanation: "Explanation",
-          type: 0,
-        };
-      },
+      // default: () => {
+      //   return {
+      //     id: "1",
+      //     title: "Rolex is a company that specializes in what type of product?",
+      //     options: {
+      //       a: "Bags",
+      //       b: "Watches",
+      //       c: "Shoes",
+      //       d: "Laptops",
+      //       e: "Laptops 123",
+      //     },
+      //     answer: "a",
+      //     explanation: "Explanation",
+      //     type: 0,
+      //   };
+      // },
     },
   },
   data() {
@@ -62,7 +60,6 @@ export default {
             question: this.question.id,
             answer: this.selectedAnswer
         }
-        console.log(answer)
         this.$emit('selectAnswer', answer)
     },
   },
@@ -94,9 +91,6 @@ export default {
   background-color: #f1f3f4;
 }
 .input_label_selected {
-  background-color: rgba(128, 128, 128, 0.808);
-}
-.input_label_red {
   background-color: rgba(128, 128, 128, 0.808);
 }
 .input_label_green {
