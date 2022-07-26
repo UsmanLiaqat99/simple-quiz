@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <div v-if="question">
     <div class="mainQuestion">
       <h2 class="questionTitle">
@@ -23,7 +22,6 @@
         />
         {{ question.options[option] }}
       </label>
-=======
   <div id="main">
     <div v-if="index < count">
       <h2 class="main_title">Check Box Quiz</h2>
@@ -83,7 +81,6 @@
       <div class="playAgain">
         <it-button @click="resetQuiz" type="success">Play again</it-button>
       </div>
->>>>>>> origin/usman
     </div>
   </div>
 </template>

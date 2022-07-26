@@ -33,11 +33,12 @@
       <TextQuestion v-else-if="shownQuestion && (shownQuestion.type == 3 || shownQuestion.type == 4)"
         :question="shownQuestion" @selectAnswer="selectAnswer" />
       <div class="btn">
-        <it-button type="success" @click="prevQuestion">&lt; Prev</it-button>
-        <it-button type="success" @click="nextQuestion">Next &gt;</it-button>
+        <it-button type="success" @click="prevQuestion" :disabled="shownQuestionCount < 1" >&lt; Prev</it-button>
+        <it-button type="success" @click="nextQuestion" :disabled="showNextBtn === false">Next &gt;</it-button>
+        <!-- <it-button type="success" @click="nextQuestion" v-if="showNextBtn">Next &gt;</it-button> -->
         <!-- <it-button type="success" @click="submit">Submit</it-button> -->
       </div>
-    </div>
+    </div> 
   </div>
 </template>
 
@@ -94,7 +95,7 @@ export default {
         },
         {
           id: "4",
-          title: "Rolex is a company that specializes in what type of product?",
+          title: "Short Question is a company that specializes in what type of product?",
           options: null,
           answer: null,
           explanation: "Explanation",
@@ -102,7 +103,7 @@ export default {
         },
         {
           id: "5",
-          title: "Rolex is a company that specializes in what type of product?",
+          title: "Long Question is a company that specializes in what type of product?",
           options: null,
           answer: null,
           explanation: "Explanation",
