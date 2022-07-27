@@ -1,5 +1,5 @@
 <template>
-  <div v-if="question">
+  <div v-if="question.type === 5">
     <div class="mainQuestion">
       <h2 class="questionTitle">
         {{ question.title }}

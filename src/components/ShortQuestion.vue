@@ -1,5 +1,5 @@
 <template>
-  <div v-if="question">
+  <div v-if="question.type === 3">
     <div class="mainQuestion">
       <h2 class="questionTitle">
         {{ question.title }}
@@ -31,7 +31,6 @@ export default {
     },
     shownAnswer() {
       if (this.question.answeredQuestion) {
-        console.log(this.question.answeredQuestion)
         this.selectedAnswer = this.question.answeredQuestion
       }
     },

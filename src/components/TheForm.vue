@@ -45,10 +45,9 @@ export default {
                     name: this.name,
                     email: this.email,
                     number: this.number,
-                    msg: this.msg,
                 }
+                this.$store.dispatch('userInfo', userData)
                 this.$router.push("/category")
-                console.log(userData)
             }
             else {
                 this.err = true
