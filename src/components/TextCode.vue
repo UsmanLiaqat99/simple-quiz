@@ -4,13 +4,7 @@
       <h2 class="questionTitle">
         {{ question.title }}
       </h2>
-      <!-- <textarea
-        class="input_label"
-        v-if="question.type == 5"
-        v-model="selectedAnswerLong"
-        type="text"
-        @change="selectAnswer"
-      /> --><CodeEditor
+      <CodeEditor
         :wrap_code="true"
         :hide_header="true"
         width="100%"
@@ -38,7 +32,16 @@ export default {
       selectedAnswer: "",
     };
   },
+  mounted() {
+    this.shownAnswer()
+  },
   methods: {
+    shownAnswer() {
+      if (this.question.answeredQuestion) {
+        console.log(this.question.answeredQuestion)
+        this.selectedAnswer = this.question.answeredQuestion
+      }
+    },
     selectAnswer() {
       const answer = {
         question: this.question.id,

@@ -9,15 +9,24 @@
       <CheckBox v-else-if="shownQuestion && shownQuestion.type == 1"
         :question="shownQuestion"
         @selectAnswer="selectAnswer"/>
-      <TextQuestion
-        v-else-if="shownQuestion && (shownQuestion.type == 3 || shownQuestion.type == 4)"
+      <ShortQuestion v-else-if="shownQuestion && shownQuestion.type == 3"
+        :question="shownQuestion"
+        @selectAnswer="selectAnswer"/>
+      <LongQuestion
+        v-else-if="shownQuestion && shownQuestion.type == 4"
         :question="shownQuestion"
         @selectAnswer="selectAnswer"
       />
       <TextCode v-else-if="shownQuestion && shownQuestion.type == 5"
         :question="shownQuestion"
         @selectAnswer="selectAnswer"/>
-      <div class="btn">
+        <div v-if="count === shownQuestionCount">
+          <the-result>
+            <it-button  @click="checkAgainCode" type="warning">Check Again</it-button>
+            <it-button  @click="submitQuiz" type="warning">Submit</it-button>
+          </the-result>
+        </div>
+      <div class="btn" v-else>
         <base-button :disable="shownQuestionCount < 1" @click="prevQuestion">&lt; Prev</base-button>
         <base-button :disable="showNextBtn === false" @click="nextQuestion">Next &gt;</base-button>
       </div>
@@ -27,9 +36,11 @@
 
 <script>
 import MultipleChoiceQuestion from "./MultipleChoiceQuestion.vue";
-import TextQuestion from "./TextQuestion.vue";
+import LongQuestion from "./LongQuestion.vue";
 import CheckBox from "./CheckBox.vue";
 import TextCode from "./TextCode.vue";
+import TheResult from "./TheResult.vue";
+import ShortQuestion from "./ShortQuestion.vue";
 export default {
   data() {
     return {
@@ -52,7 +63,7 @@ export default {
           },
           answer: "a",
           explanation: "Explanation",
-          answeredQuestions: '',
+          answeredQuestion: '',
           type: 0,
         },
         {
@@ -68,6 +79,7 @@ export default {
           },
           answer: "a",
           explanation: "Explanation",
+          answeredQuestion: '',
           type: 1,
         },
         {
@@ -76,7 +88,7 @@ export default {
           options: { a: "True", b: "False" },
           answer: "a",
           explanation: "Explanation",
-          answeredQuestions: '',
+          answeredQuestion: '',
           type: 2,
         },
         {
@@ -85,6 +97,7 @@ export default {
           options: null,
           answer: null,
           explanation: "Explanation",
+          answeredQuestion: '',
           type: 3,
         },
         {
@@ -93,6 +106,7 @@ export default {
           options: null,
           answer: null,
           explanation: "Explanation",
+          answeredQuestion: '',
           type: 4,
         },
         {
@@ -101,11 +115,13 @@ export default {
           options: null,
           answer: null,
           explanation: "Explanation",
+          answeredQuestion: '',
           type: 5,
         },
       ],
       shownQuestion: null,
       showNextBtn: false,
+      showSubmitDialog: false
     };
   },
   mounted() {
@@ -117,25 +133,23 @@ export default {
     selectAnswer(answer) {
       this.showNextBtn = true;
       // console.log(answer, "ok");
-      console.log(
-        this.answeredQuestions.findIndex((o) => o.question == answer.question)
-      );
+      // console.log(
+      //   this.answeredQuestions.findIndex((o) => o.question == answer.question)
+      // );
       const index = this.answeredQuestions.findIndex(
         (o) => o.question == answer.question
       );
       if (index !== -1) {
-        this.questions.selectedAnswer = answer.answer
-          console.log(this.questions.selectedAnswer, 'ok2')
+          this.shownQuestion.answeredQuestion = answer.answer
         this.answeredQuestions[index].answer = answer.answer;
         if (answer.answer.length === 0) {
           this.showNextBtn = false
         }
       }
       else {
-        this.questions[this.shownQuestionCount].selectedAnswer = answer.answer
-        console.log(this.questions.selectedAnswer, 'ok')
+        this.shownQuestion.answeredQuestion = answer.answer
         this.answeredQuestions.push(answer);
-        console.log(this.answeredQuestions);
+        // console.log(this.answeredQuestions);
       }
     },
     answered(e) {
@@ -149,8 +163,11 @@ export default {
     nextQuestion() {
       this.shownQuestionCount++;
       this.shownQuestion = this.questions[this.shownQuestionCount];
-      this.showNextBtn = false
-      console.log(this.questions[this.shownQuestionCount].selectedAnswer, 'ok')
+      if (this.shownQuestion.answeredQuestion) {
+        this.showNextBtn = true
+      } else {
+        this.showNextBtn = false
+      }
     },
     prevQuestion() {
       this.shownQuestionCount--;
@@ -167,8 +184,17 @@ export default {
       this.correctAnswer = 0;
       this.wrongAnswer = 0;
     },
+    checkAgainCode() {
+      this.shownQuestionCount = 0;
+      this.shownQuestion = this.questions[this.shownQuestionCount];
+      this.showNextBtn = true
+    },
+    submitQuiz() {
+      alert('Your quiz has been submited!')
+      window.location.reload()
+    }
   },
-  components: { MultipleChoiceQuestion, TextQuestion, CheckBox, TextCode },
+  components: { MultipleChoiceQuestion, LongQuestion, CheckBox, TextCode, TheResult, ShortQuestion },
 };
 </script>
 

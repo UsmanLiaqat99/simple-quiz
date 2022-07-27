@@ -4,46 +4,31 @@
       <h2 class="questionTitle">
         {{ question.title }}
       </h2>
-      <label
-        v-for="(option, i) in Object.keys(question.options)"
-        :for="i"
-        :key="i"
-        :class="[
-          { input_label: selectedAnswer !== option },
-          { input_label_selected: selectedAnswer == option },
-        ]"
-      >
-        <input
-          type="checkbox"
-          :id="i"
-          :value="option"
-          @change="selectAnswer"
-          v-model="selectedAnswer"
-        />
-        {{ question.options[option] }}
-      </label>
+      <input class="input_label" v-if="question.type == 3" v-model="selectedAnswer" type="text" @change="selectAnswer" />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "CheckBox",
+  name: "TextQuestion",
   props: {
     question: {
-      type: Object,
-      default: null
+      type: Object
     },
   },
   data() {
     return {
-      selectedAnswer: [],
+      selectedAnswer: ''
     };
   },
   mounted() {
     this.shownAnswer()
   },
   methods: {
+    mounted() {
+      this.shownAnswer()
+    },
     shownAnswer() {
       if (this.question.answeredQuestion) {
         console.log(this.question.answeredQuestion)
@@ -60,3 +45,27 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.mainQuestion input, .mainQuestion textarea {
+  padding: 8px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid grey;
+  font-size: 18px;
+}
+
+.mainQuestion textarea {
+  height: 120px;
+}
+
+@media only screen and (max-width: 750px) {
+  .questionTitle {
+    font-size: 18px;
+  }
+
+  .input_label {
+    padding: 10px;
+  }
+}
+</style>
