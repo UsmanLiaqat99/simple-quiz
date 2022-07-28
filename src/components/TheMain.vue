@@ -52,6 +52,7 @@
           >Next &gt;</base-button
         >
       </div>
+      <div class="totalQ"> <span style="color: green;">{{ shownQuestionCount + 1 }}</span><b> / </b><span style="color: green;">{{ count }}</span> </div>
     </div>
   </div>
 </template>
@@ -219,6 +220,7 @@ export default {
       window.location.reload();
     },
   },
+  
   components: {
     TheResult,
     MultipleChoiceQuestion,
@@ -246,6 +248,17 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-top: -60px;
+}
+
+.totalQ {
+  display: flex;
+  justify-content: center;
+  margin-top: -26px;
+}
+
+.totalQ span {
+  margin: 0px 10px;
+  font-weight: bold;
 }
 
 /* RESPONSIVE */

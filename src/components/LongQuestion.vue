@@ -3,7 +3,7 @@
       <h2 class="questionTitle">
         {{ question.title }}
       </h2>
-      <textarea :disabled="disable" class="input_label" v-model="selectedAnswer" type="text" @change="selectAnswer" />
+      <textarea style="resize: vertical;" :disabled="disable" class="input_label" v-model="selectedAnswer" type="text" @change="selectAnswer" />
     </div>
 </template>
 

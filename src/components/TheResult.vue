@@ -14,13 +14,13 @@
           <h4>Phone#</h4>
           <p>{{ number }}</p>
         </div>
-
       </div>
     </div>
     <h4>Are you confirm to submit your quiz or check again!</h4>
     <div class="btn">
       <slot></slot>
     </div>
+      <button v-if="showDownBtn" id="myBtn" @click="toTop"><ion-icon name="arrow-up-outline"></ion-icon></button>
   </div>
 </template>
 
@@ -30,6 +30,7 @@ export default {
     return {
       correctAnswers: 2,
       totalAnswers: 10,
+      showDownBtn: false
     };
   },
   computed: {
@@ -42,11 +43,61 @@ export default {
     number() {
         return this.$store.getters.number
     }
-  }
+  },
+  methods: {
+    toTop() {
+      this.position = window.scrollY
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      })
+    },
+    handleScroll() {
+      if (window.scrollY >= 800) {
+        this.showDownBtn = true
+      } else {
+        this.showDownBtn = false
+      }
+    }
+  },
+  created () {
+    window.addEventListener('scroll', this.handleScroll);
+  },
 };
 </script>
 
 <style scoped>
+#myBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: skyblue;
+  color: white;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 4px;
+}
+
+.myBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 4px;
+}
+
 .user {
   padding: 0px 4px;
 }
