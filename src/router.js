@@ -1,18 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import main from './components/TheMain'
-import CheckBox from './components/CheckBox.vue'
+import form from './components/TheForm.vue'
+import category from './components/TheCategory.vue'
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
             path: '/',
-            component: main
+            component: form
         },
         {
-            path: '/checkbox',
-            component: CheckBox
+            path: '/category',
+            component: category
+        },
+        {
+            path: '/quiz',
+            component: main
         }
     ]
 })

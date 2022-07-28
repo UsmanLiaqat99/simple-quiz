@@ -2,57 +2,68 @@
   <div id="main">
     <div>
       <MultipleChoiceQuestion
-        v-if="shownQuestion && (shownQuestion.type == 0 || shownQuestion.type == 2)"
+        v-if="
+          shownQuestion && (shownQuestion.type == 0 || shownQuestion.type == 2)
+        "
         :question="shownQuestion"
         @selectAnswer="selectAnswer"
       />
-      <CheckBox v-else-if="shownQuestion && shownQuestion.type == 1"
-        :question="shownQuestion"
-        @selectAnswer="selectAnswer"/>
-      <TextQuestion
-        v-else-if="shownQuestion && (shownQuestion.type == 3 || shownQuestion.type == 4)"
+      <CheckBox
+        v-else-if="shownQuestion && shownQuestion.type == 1"
         :question="shownQuestion"
         @selectAnswer="selectAnswer"
       />
-      <TextCode v-else-if="shownQuestion && shownQuestion.type == 5"
+      <ShortQuestion
+        v-else-if="shownQuestion && shownQuestion.type == 3"
         :question="shownQuestion"
-        @selectAnswer="selectAnswer"/>
-      <div class="btn">
-        <base-button :disable="shownQuestionCount < 1" @click="prevQuestion">&lt; Prev</base-button>
-        <base-button :disable="showNextBtn === false" @click="nextQuestion">Next &gt;</base-button>
-=======
-        <it-button type="success" @click="prevQuestion" :disabled="shownQuestionCount < 1" >&lt; Prev</it-button>
-        <it-button type="success" @click="nextQuestion" :disabled="showNextBtn === false">Next &gt;</it-button>
-        <!-- <it-button type="success" @click="nextQuestion" v-if="showNextBtn">Next &gt;</it-button> -->
-        <!-- <it-button type="success" @click="submit">Submit</it-button> -->
+        @selectAnswer="selectAnswer"
+      />
+      <LongQuestion
+        v-else-if="shownQuestion && shownQuestion.type == 4"
+        :question="shownQuestion"
+        @selectAnswer="selectAnswer"
+      />
+      <TextCode
+        v-else-if="shownQuestion && shownQuestion.type == 5"
+        :question="shownQuestion"
+        @selectAnswer="selectAnswer"
+      />
+      <div v-if="count === shownQuestionCount">
+        <the-result>
+          <it-button @click="prevQuestion" type="warning">&lt; Back</it-button>
+          <it-button @click="submitQuiz" type="warning">Submit</it-button>
+        </the-result>
+        <br />
+        <div style="gap: 18px;display:flex; flex-direction:column">
+          <div v-for="question in questions" :key="question">
+            <MultipleChoiceQuestion v-if="question.type === 0 || question.type === 2" :question="question" disable />
+            <CheckBox v-if="question.type === 1" :question="question" disable />
+            <ShortQuestion v-if="question.type === 3" :question="question" disable />
+            <LongQuestion v-if="question.type === 4" :question="question" disable />
+            <LongQuestion v-if="question.type === 5" :question="question" disable />
+          </div>
+        </div>
       </div>
-    </div> 
+      <div class="btn" v-else>
+        <base-button :disable="shownQuestionCount < 1" @click="prevQuestion"
+          >&lt; Prev</base-button
+        >
+        <base-button :disable="showNextBtn === false" @click="nextQuestion"
+          >Next &gt;</base-button
+        >
+      </div>
+      <div class="totalQ"> <span style="color: green;">{{ shownQuestionCount + 1 }}</span><b> / </b><span style="color: green;">{{ count }}</span> </div>
     </div>
-    <!-- <div class="btn" style="display: flex">
-      <it-button style="margin-left: 350px" type="success" @click="nextQuestion"
-        >Next &gt;</it-button
-      >
-    </div> -->
-    <it-button type="success" @click="nextQuestion" v-if="showNextBtn">Next &gt;</it-button>
-      <MultipleChoiceQuestion v-if="shownQuestion && (shownQuestion.type == 0 || shownQuestion.type == 2)"
-        :question="shownQuestion" @selectAnswer="selectAnswer" />
-      <TextQuestion v-else-if="shownQuestion && (shownQuestion.type == 3 || shownQuestion.type == 4)"
-        :question="shownQuestion" @selectAnswer="selectAnswer" />
-      <div class="btn">
-        <it-button type="success" @click="prevQuestion" :disabled="shownQuestionCount < 1" >&lt; Prev</it-button>
-        <it-button type="success" @click="nextQuestion" :disabled="showNextBtn === false">Next &gt;</it-button>
-        <!-- <it-button type="success" @click="nextQuestion" v-if="showNextBtn">Next &gt;</it-button> -->
-        <!-- <it-button type="success" @click="submit">Submit</it-button> -->
-      </div>
-    </div> 
   </div>
 </template>
 
 <script>
 import MultipleChoiceQuestion from "./MultipleChoiceQuestion.vue";
-import TextQuestion from "./TextQuestion.vue";
+import LongQuestion from "./LongQuestion.vue";
 import CheckBox from "./CheckBox.vue";
 import TextCode from "./TextCode.vue";
+import ShortQuestion from "./ShortQuestion.vue";
+import TheResult from "./TheResult.vue";
 export default {
   data() {
     return {
@@ -75,7 +86,7 @@ export default {
           },
           answer: "a",
           explanation: "Explanation",
-          answeredQuestions: '',
+          answeredQuestion: "",
           type: 0,
         },
         {
@@ -91,44 +102,53 @@ export default {
           },
           answer: "a",
           explanation: "Explanation",
+          answeredQuestion: "",
           type: 1,
         },
         {
           id: "3",
-          title: "Boolen Rolex is a company that specializes in what type of product?",
+          title:
+            "Boolen Rolex is a company that specializes in what type of product?",
           options: { a: "True", b: "False" },
           answer: "a",
           explanation: "Explanation",
-          answeredQuestions: '',
+          answeredQuestion: "",
           type: 2,
         },
         {
           id: "4",
-          title: "Short Question is a company that specializes in what type of product?",
+          title:
+            "Short Question is a company that specializes in what type of product?",
           options: null,
           answer: null,
           explanation: "Explanation",
+          answeredQuestion: "",
           type: 3,
         },
         {
           id: "5",
-          title: "Long Question is a company that specializes in what type of product?",
+          title:
+            "Long Question is a company that specializes in what type of product?",
           options: null,
           answer: null,
           explanation: "Explanation",
+          answeredQuestion: "",
           type: 4,
         },
         {
           id: "6",
-          title: "Code of block is a company that specializes in what type of product?",
+          title:
+            "Code of block is a company that specializes in what type of product?",
           options: null,
           answer: null,
           explanation: "Explanation",
+          answeredQuestion: "",
           type: 5,
         },
       ],
       shownQuestion: null,
       showNextBtn: false,
+      showSubmitDialog: false,
     };
   },
   mounted() {
@@ -140,25 +160,22 @@ export default {
     selectAnswer(answer) {
       this.showNextBtn = true;
       // console.log(answer, "ok");
-      console.log(
-        this.answeredQuestions.findIndex((o) => o.question == answer.question)
-      );
+      // console.log(
+      //   this.answeredQuestions.findIndex((o) => o.question == answer.question)
+      // );
       const index = this.answeredQuestions.findIndex(
         (o) => o.question == answer.question
       );
       if (index !== -1) {
-        this.questions.selectedAnswer = answer.answer
-          console.log(this.questions.selectedAnswer, 'ok2')
+        this.shownQuestion.answeredQuestion = answer.answer;
         this.answeredQuestions[index].answer = answer.answer;
         if (answer.answer.length === 0) {
-          this.showNextBtn = false
+          this.showNextBtn = false;
         }
-      }
-      else {
-        this.questions[this.shownQuestionCount].selectedAnswer = answer.answer
-        console.log(this.questions.selectedAnswer, 'ok')
+      } else {
+        this.shownQuestion.answeredQuestion = answer.answer;
         this.answeredQuestions.push(answer);
-        console.log(this.answeredQuestions);
+        // console.log(this.answeredQuestions);
       }
     },
     answered(e) {
@@ -172,13 +189,16 @@ export default {
     nextQuestion() {
       this.shownQuestionCount++;
       this.shownQuestion = this.questions[this.shownQuestionCount];
-      this.showNextBtn = false
-      console.log(this.questions[this.shownQuestionCount].selectedAnswer, 'ok')
+      if (this.shownQuestion.answeredQuestion) {
+        this.showNextBtn = true;
+      } else {
+        this.showNextBtn = false;
+      }
     },
     prevQuestion() {
       this.shownQuestionCount--;
       this.shownQuestion = this.questions[this.shownQuestionCount];
-      this.showNextBtn = true
+      this.showNextBtn = true;
     },
     showResults() {
       this.finalAnswered();
@@ -190,8 +210,25 @@ export default {
       this.correctAnswer = 0;
       this.wrongAnswer = 0;
     },
+    checkAgainCode() {
+      this.shownQuestionCount = 0;
+      this.shownQuestion = this.questions[this.shownQuestionCount];
+      this.showNextBtn = true;
+    },
+    submitQuiz() {
+      alert("Your quiz has been submited!");
+      window.location.reload();
+    },
   },
-  components: { MultipleChoiceQuestion, TextQuestion, CheckBox, TextCode },
+  
+  components: {
+    TheResult,
+    MultipleChoiceQuestion,
+    LongQuestion,
+    CheckBox,
+    TextCode,
+    ShortQuestion,
+  },
 };
 </script>
 
@@ -203,8 +240,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #e5e7eb;
-  height: 38rem;
+  /* height: 38rem; */
 }
 
 .btn {
@@ -212,6 +248,17 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-top: -60px;
+}
+
+.totalQ {
+  display: flex;
+  justify-content: center;
+  margin-top: -26px;
+}
+
+.totalQ span {
+  margin: 0px 10px;
+  font-weight: bold;
 }
 
 /* RESPONSIVE */

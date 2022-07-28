@@ -1,5 +1,4 @@
 <template>
-  <div v-if="question">
     <div class="mainQuestion">
       <h2 class="questionTitle">
         {{ question.title }}
@@ -13,6 +12,7 @@
         ]"
       >
         <input
+         :disabled="disable"
           type="radio"
           :id="i"
           :value="option"
@@ -22,7 +22,6 @@
         {{ question.options[option] }}
       </label>
     </div>
-  </div>
 </template>
 
 <script>
@@ -30,34 +29,29 @@ export default {
   name: "MultipleChoiceQuestion",
   props: {
     question: {
-      type: Object,
-      // default: () => {
-      //   return {
-      //     id: "1",
-      //     title: "Rolex is a company that specializes in what type of product?",
-      //     options: {
-      //       a: "Bags",
-      //       b: "Watches",
-      //       c: "Shoes",
-      //       d: "Laptops",
-      //       e: "Laptops 123",
-      //     },
-      //     answer: "a",
-      //     explanation: "Explanation",
-      //     type: 0,
-      //   };
-      // },
+      type: Object
     },
+    disable: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
       selectedAnswer: "",
     };
   },
+  mounted() {
+    this.shownAnswer()
+  },
   methods: {
+    shownAnswer() {
+      if (this.question.answeredQuestion) {
+        console.log(this.question.answeredQuestion)
+        this.selectedAnswer = this.question.answeredQuestion
+      }
+    },
     selectAnswer() {
-      // this.question.answeredQuestions = this.selectedAnswer
-      console.log(this.question.answeredQuestions)
         const answer = {
             question: this.question.id,
             answer: this.selectedAnswer
