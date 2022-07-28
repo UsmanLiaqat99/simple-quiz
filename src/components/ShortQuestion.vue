@@ -1,12 +1,10 @@
 <template>
-  <div v-if="question.type === 3">
     <div class="mainQuestion">
       <h2 class="questionTitle">
         {{ question.title }}
       </h2>
-      <input class="input_label" v-if="question.type == 3" v-model="selectedAnswer" type="text" @change="selectAnswer" />
+      <input :disabled="disable" class="input_label" v-if="question.type == 3" v-model="selectedAnswer" type="text" @change="selectAnswer" />
     </div>
-  </div>
 </template>
 
 <script>
@@ -16,6 +14,10 @@ export default {
     question: {
       type: Object
     },
+    disable: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {

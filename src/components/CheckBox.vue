@@ -1,5 +1,4 @@
 <template>
-  <div v-if="question.type === 1">
     <div class="mainQuestion">
       <h2 class="questionTitle">
         {{ question.title }}
@@ -14,6 +13,7 @@
         ]"
       >
         <input
+         :disabled="disable"
           type="checkbox"
           :id="i"
           :value="option"
@@ -23,7 +23,6 @@
         {{ question.options[option] }}
       </label>
     </div>
-  </div>
 </template>
 
 <script>
@@ -34,6 +33,10 @@ export default {
       type: Object,
       default: null
     },
+    disable: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {

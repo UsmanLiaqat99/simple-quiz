@@ -1,10 +1,10 @@
 <template>
-  <div v-if="question.type === 5">
     <div class="mainQuestion">
       <h2 class="questionTitle">
         {{ question.title }}
       </h2>
       <CodeEditor
+        :read_only="disable"
         :wrap_code="true"
         :hide_header="true"
         width="100%"
@@ -14,7 +14,6 @@
       >
       </CodeEditor>
     </div>
-  </div>
 </template>
 
 <script>
@@ -26,6 +25,10 @@ export default {
     question: {
       type: Object
     },
+    disable: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {

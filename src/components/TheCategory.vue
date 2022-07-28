@@ -1,8 +1,7 @@
 <template>
     <div class="main">
         <div class="subMain" @click="selecetCategory">
-
-            <h2>Start quiz with:</h2>
+            <h2>Which type of test you want to held?</h2>
             <p>
                 Frontend Developer
             </p>
